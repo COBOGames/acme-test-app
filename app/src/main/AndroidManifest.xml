@@ -9,13 +9,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AcmeCompany">
-        <activity android:name=".ui.MainActivity">
+
+        <!-- Sugar ORM configuration -->
+        <meta-data
+            android:name="DATABASE"
+            android:value="acme_company.db"/>
+        <meta-data
+            android:name="VERSION"
+            android:value="1"/>
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.isucorp.acmecompanytest.entities"/>
+
+        <!-- Activities -->
+        <activity
+            android:name=".ui.LoginActivity"
+            android:label="@string/activity_title_login">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/activity_title_main" />
     </application>
 
 </manifest>

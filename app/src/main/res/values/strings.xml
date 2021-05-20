@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">ACME | Dashboard </string>
+    <string name="app_name">ACME</string>
+    <string name="activity_title_login">ACME | Login</string>
+    <string name="activity_title_main">ACME | Dashboard</string>
+    <string name="login_hint_username">Username</string>
+    <string name="login_hint_password">Password</string>
+    <string name="login_start_btn">Start</string>
+    <string name="error_msg_can_not_be_empty">Can not be empty</string>
+    <string name="error_msg_wrong_username_or_pass">Wrong username or password</string>
 </resources>
