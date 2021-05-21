@@ -8,11 +8,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.isucorp.acmecompanytest.Info;
 import com.isucorp.acmecompanytest.R;
 import com.isucorp.acmecompanytest.helpers.TextInputLayoutHelper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+@Info("Created by Ivan Faez Cobo on 20/5/2021")
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener
 {
 
@@ -69,7 +71,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     if (!username.equals("admin") || !password.equals("admin"))
                         TextInputLayoutHelper.setError(m_tilPassword, getString(R.string.error_msg_wrong_username_or_pass));
                     else
+                    {
                         startActivity(new Intent(this, MainActivity.class));
+                        finish();
+                    }
                 }
 
                 break;

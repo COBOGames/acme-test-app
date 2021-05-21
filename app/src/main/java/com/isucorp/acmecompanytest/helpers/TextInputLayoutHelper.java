@@ -5,7 +5,9 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.isucorp.acmecompanytest.Info;
 
+@Info("Created by Ivan Faez Cobo on 20/5/2021")
 public final class TextInputLayoutHelper
 {
     public static void addClearErrorOnTextChanged(final EditText edt, final TextInputLayout til)

@@ -1,8 +1,10 @@
 package com.isucorp.acmecompanytest.entities;
 
+import com.isucorp.acmecompanytest.Info;
 import com.orm.dsl.Column;
 import com.orm.dsl.Table;
 
+@Info("Created by Ivan Faez Cobo on 20/5/2021")
 @Table(name = "user")
 public class User extends AbstractSugarEntity
 {
