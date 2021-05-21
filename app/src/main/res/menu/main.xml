@@ -3,13 +3,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_add_item"
+        android:id="@+id/action_add_ticket"
         android:icon="@drawable/ic_add"
-        android:title="New Item"
+        android:title="@string/action_new_ticket"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_todo"
-        android:title="TODO"/>
+        android:id="@+id/action_work_ticket"
+        android:title="@string/action_work_ticket"/>
+
+    <item
+        android:id="@+id/action_get_directions"
+        android:title="@string/action_get_directions"/>
 
 </menu>

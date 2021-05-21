@@ -1,10 +1,29 @@
 <resources>
+
     <string name="app_name">ACME</string>
+
+    <!-- ACTIVITY TITLES -->
     <string name="activity_title_login">ACME | Login</string>
     <string name="activity_title_main">ACME | Dashboard</string>
+
+    <!-- ACTIONS -->
+    <string name="action_new_ticket">Add new ticket</string>
+    <string name="action_work_ticket">Work ticket</string>
+    <string name="action_get_directions">Get directions</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+
+    <!-- LOGIN ACTIVITY -->
     <string name="login_hint_username">Username</string>
     <string name="login_hint_password">Password</string>
     <string name="login_start_btn">Start</string>
+
+    <!-- ERROR MESSAGES -->
     <string name="error_msg_can_not_be_empty">Can not be empty</string>
     <string name="error_msg_wrong_username_or_pass">Wrong username or password</string>
+
+    <!-- MAIN ACTIVITY -->
+    <string name="main_tickets_empty">You have no tickets</string>
+    <string name="main_add_ticket_to_see_it">Once you create a new one you\'ll see it here</string>
+
 </resources>
