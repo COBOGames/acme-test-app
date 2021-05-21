@@ -37,6 +37,9 @@
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/activity_title_main" />
+
+        <activity android:name=".ui.WorkTicketActivity" />
+
     </application>
 
 </manifest>

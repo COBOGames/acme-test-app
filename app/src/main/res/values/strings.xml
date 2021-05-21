@@ -26,4 +26,7 @@
     <string name="main_tickets_empty">You have no tickets</string>
     <string name="main_add_ticket_to_see_it">Once you create a new one you\'ll see it here</string>
 
+    <!-- WORK TICKET ACTIVITY -->
+    <string name="work_ticked_edit_title">Edit ticked</string>
+
 </resources>

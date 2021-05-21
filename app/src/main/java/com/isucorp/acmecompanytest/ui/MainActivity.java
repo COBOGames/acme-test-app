@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.action_add_ticket:
             {
-                ToastHelper.show("TODO 'Add ticket'");
+                WorkTicketActivity.start(this, null); // we pass null to create a new one
                 return true;
             }
             case R.id.action_work_ticket:
