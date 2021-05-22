@@ -94,6 +94,11 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.ViewHold
     public void removeItem(String uuid)
     {
         int position = getRequestPosition(uuid);
+        removeItem(position);
+    }
+
+    public void removeItem(int position)
+    {
         if (position != -1)
         {
             m_list.remove(position);

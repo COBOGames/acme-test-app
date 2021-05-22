@@ -1,5 +1,6 @@
 package com.isucorp.acmecompanytest.ui;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import com.isucorp.acmecompanytest.Info;
 import com.isucorp.acmecompanytest.R;
 import com.isucorp.acmecompanytest.entities.AbstractSugarEntity;
 import com.isucorp.acmecompanytest.entities.Ticket;
+import com.isucorp.acmecompanytest.helpers.DialogHelper;
 import com.isucorp.acmecompanytest.helpers.ToastHelper;
 import com.isucorp.acmecompanytest.ui.adapters.OnTicketEvents;
 import com.isucorp.acmecompanytest.ui.adapters.TicketsAdapter;
@@ -201,7 +203,34 @@ public class MainActivity extends AppCompatActivity
             public void onTicketDelete(int position)
             {
                 final Ticket ticket = m_adapter.getTicket(position);
-                ToastHelper.show("TODO delete at " + position);
+
+                // show a confirm dialog to delete
+                DialogHelper.showConfirm(
+                        MainActivity.this,
+                        DialogHelper.NO_TEXT,
+                        getString(R.string.confirm_delete_this_ticket),
+                        (dialog, which) -> {
+                            // delete if positive clicked
+                            if (which == DialogInterface.BUTTON_POSITIVE)
+                            {
+                                try
+                                {
+                                    // delete the ticket from the database and from the recycler view
+                                    ticket.delete();
+                                    m_adapter.removeItem(position);
+
+                                    // update containers
+                                    updateBodyContainersVisibility();
+                                }
+                                catch (Exception e)
+                                {
+                                    ToastHelper.show("Error deleting ticket");
+                                }
+                            }
+                        },
+                        getString(R.string.action_delete),
+                        DialogHelper.DEFAULT_TEXT
+                );
             }
         });
     }

@@ -40,4 +40,7 @@
     <string name="msg_ticket_added">Ticket added successful</string>
     <string name="msg_ticket_edited">Ticket edited successful</string>
 
+    <string name="confirm_dialog_default_title">Confirmation</string>
+    <string name="confirm_delete_this_ticket">Are you sure to delete this ticket?</string>
+
 </resources>
