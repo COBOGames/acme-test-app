@@ -12,6 +12,7 @@
     <string name="action_get_directions">Get directions</string>
     <string name="action_delete">Delete</string>
     <string name="action_edit">Edit</string>
+    <string name="action_save">Save</string>
 
     <!-- LOGIN ACTIVITY -->
     <string name="login_hint_username">Username</string>
@@ -28,5 +29,13 @@
 
     <!-- WORK TICKET ACTIVITY -->
     <string name="work_ticked_edit_title">Edit ticked</string>
+    <string name="hint_client_name">Client name*</string>
+    <string name="hint_address">Address*</string>
+    <string name="hint_schedule_date">Schedule date*</string>
+    <string name="hint_phone">Phone number</string>
+    <string name="hint_reason_for_call">Reason for call</string>
+    <string name="overview">Overview</string>
+    <string name="purchasing">Purchasing</string>
+    <string name="finishing_up">Finishing up</string>
 
 </resources>
