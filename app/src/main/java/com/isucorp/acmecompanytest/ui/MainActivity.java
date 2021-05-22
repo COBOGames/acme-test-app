@@ -1,5 +1,6 @@
 package com.isucorp.acmecompanytest.ui;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,14 +9,17 @@ import android.view.View;
 
 import com.isucorp.acmecompanytest.Info;
 import com.isucorp.acmecompanytest.R;
+import com.isucorp.acmecompanytest.entities.AbstractSugarEntity;
 import com.isucorp.acmecompanytest.entities.Ticket;
 import com.isucorp.acmecompanytest.helpers.ToastHelper;
 import com.isucorp.acmecompanytest.ui.adapters.OnTicketEvents;
 import com.isucorp.acmecompanytest.ui.adapters.TicketsAdapter;
 import com.orm.SugarRecord;
 
+import java.util.Collections;
 import java.util.List;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +28,12 @@ import androidx.recyclerview.widget.RecyclerView;
 @Info("Created by Ivan Faez Cobo on 20/5/2021")
 public class MainActivity extends AppCompatActivity
 {
+    // region
+
+    private static final int RC_WORK_TICKET = 910;
+
+    // endregion
+
     // region PRIVATE VARIABLES
 
     private TicketsAdapter m_adapter;
@@ -65,7 +75,8 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.action_add_ticket:
             {
-                WorkTicketActivity.start(this, null); // we pass null to create a new one
+                // we pass null to create a new one
+                WorkTicketActivity.start(this, null, RC_WORK_TICKET);
                 return true;
             }
             case R.id.action_work_ticket:
@@ -81,6 +92,41 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
+    {
+        if (requestCode == RC_WORK_TICKET && resultCode == RESULT_OK)
+        {
+            if (data == null) return;
+
+            boolean edited = data.getBooleanExtra(WorkTicketActivity.EXTRA_TICKET_WAS_EDITED, false);
+            String uuid = data.getStringExtra(WorkTicketActivity.EXTRA_TICKET_UUID);
+
+            // if edited just update ui
+            if (edited)
+            {
+                m_adapter.notifyItemChanged(uuid);
+
+                // show toast message
+                ToastHelper.show(getString(R.string.msg_ticket_edited));
+            }
+            else // created
+            {
+                // find the new entity and insert at start of the list
+                Ticket ticket = AbstractSugarEntity.findByUuid(Ticket.class, uuid);
+
+                m_adapter.insertAtStart(ticket);        // insert at start
+                m_rv.smoothScrollToPosition(0);         // scroll to it
+                updateBodyContainersVisibility();       // update containers
+
+                // show toast message
+                ToastHelper.show(getString(R.string.msg_ticket_added));
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     // endregion
@@ -139,15 +185,16 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onTicketClick(int position)
             {
+                // edit on click
                 final Ticket ticket = m_adapter.getTicket(position);
-                ToastHelper.show("TODO click at " + position);
+                WorkTicketActivity.start(MainActivity.this, ticket, RC_WORK_TICKET);
             }
 
             @Override
             public void onTicketEdit(int position)
             {
                 final Ticket ticket = m_adapter.getTicket(position);
-                ToastHelper.show("TODO edit at " + position);
+                WorkTicketActivity.start(MainActivity.this, ticket, RC_WORK_TICKET);
             }
 
             @Override
@@ -187,7 +234,11 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected List<Ticket> doInBackground(Void... params)
         {
-            return SugarRecord.listAll(Ticket.class);
+            List<Ticket> list = SugarRecord.listAll(Ticket.class);
+
+            // reverse the order
+            Collections.reverse(list);
+            return list;
 
             // region CREATE A QUICK TEST LIST
             /*

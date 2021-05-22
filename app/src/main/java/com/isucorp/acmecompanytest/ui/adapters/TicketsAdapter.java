@@ -102,6 +102,19 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.ViewHold
     }
 
     /**
+     * Add the ticket at the start and notify the change.
+     */
+    public void insertAtStart(Ticket ticket)
+    {
+        if (m_list.size() == 0)
+            m_list.add(ticket);
+        else
+            m_list.add(0, ticket);
+
+        notifyDataSetChanged();
+    }
+
+    /**
      * Invoke the notifyItemChanged(position) for the item that contains the given uuid.
      * Not invoked if not found.
      */

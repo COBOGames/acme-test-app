@@ -37,5 +37,7 @@
     <string name="overview">Overview</string>
     <string name="purchasing">Purchasing</string>
     <string name="finishing_up">Finishing up</string>
+    <string name="msg_ticket_added">Ticket added successful</string>
+    <string name="msg_ticket_edited">Ticket edited successful</string>
 
 </resources>
