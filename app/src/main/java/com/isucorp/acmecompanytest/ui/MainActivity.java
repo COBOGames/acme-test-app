@@ -83,7 +83,17 @@ public class MainActivity extends AppCompatActivity
             }
             case R.id.action_work_ticket:
             {
-                ToastHelper.show("TODO go to 'Work ticket'");
+                // if no tickets show message
+                if (m_adapter.getItemCount() == 0)
+                {
+                    ToastHelper.show(getString(R.string.main_tickets_empty));
+                }
+                else
+                {
+                    // edit the most recent ticket created
+                    Ticket ticket = m_adapter.getTicket(0);
+                    WorkTicketActivity.start(this, ticket, RC_WORK_TICKET);
+                }
                 return true;
             }
             case R.id.action_get_directions:
