@@ -5,6 +5,7 @@
     <!-- ACTIVITY TITLES -->
     <string name="activity_title_login">ACME | Login</string>
     <string name="activity_title_main">ACME | Dashboard</string>
+    <string name="activity_title_maps">Get directions</string>
 
     <!-- ACTIONS -->
     <string name="action_new_ticket">Add new ticket</string>
@@ -42,5 +43,6 @@
 
     <string name="confirm_dialog_default_title">Confirmation</string>
     <string name="confirm_delete_this_ticket">Are you sure to delete this ticket?</string>
+    <string name="enter_address">Enter address</string>
 
 </resources>

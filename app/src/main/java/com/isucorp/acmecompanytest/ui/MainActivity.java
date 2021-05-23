@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity
             }
             case R.id.action_get_directions:
             {
-                ToastHelper.show("TODO go to 'Get directions'");
+                MapsActivity.start(this, null); // we pass an empty address
                 return true;
             }
         }

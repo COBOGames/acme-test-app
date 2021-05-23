@@ -255,7 +255,11 @@ public class WorkTicketActivity extends AppCompatActivity
         // region EVENTS
 
         findViewById(R.id.btn_get_directions).setOnClickListener(v -> {
-            ToastHelper.show("TODO get direction");
+            String address = m_edtAddress.getText().toString();
+            if (TextUtils.isEmpty(address))
+                TextInputLayoutHelper.setError(m_tilAddress, getString(R.string.error_msg_can_not_be_empty));
+            else
+                MapsActivity.start(WorkTicketActivity.this, address);
         });
 
         // show date picker dialog when schedule date is clicked
