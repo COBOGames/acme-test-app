@@ -43,8 +43,7 @@
 
         <!-- Activities -->
         <activity
-            android:name=".ui.LoginActivity"
-            android:label="@string/activity_title_login">
+            android:name=".ui.LoginActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
