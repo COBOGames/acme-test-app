@@ -1,6 +1,7 @@
 package com.isucorp.acmecompanytest.ui.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,15 @@ import com.isucorp.acmecompanytest.R;
 import com.isucorp.acmecompanytest.entities.AbstractSugarEntity;
 import com.isucorp.acmecompanytest.entities.Ticket;
 import com.isucorp.acmecompanytest.helpers.PopupMenuHelper;
+import com.isucorp.acmecompanytest.ui.WorkTicketActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 @Info("Created by Ivan Faez Cobo on 20/5/2021")
@@ -159,6 +164,7 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.ViewHold
 
         private final TextView m_tvClientName;
         private final TextView m_tvAddress;
+        private final TextView m_tvScheduleDate;
 
         // endregion
 
@@ -168,6 +174,7 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.ViewHold
 
             m_tvClientName = itemView.findViewById(R.id.tv_ticket_client_name);
             m_tvAddress = itemView.findViewById(R.id.tv_ticket_address);
+            m_tvScheduleDate = itemView.findViewById(R.id.tv_ticket_schedule_date);
 
             initEvents(adapter);
         }
@@ -176,6 +183,39 @@ public class TicketsAdapter extends RecyclerView.Adapter<TicketsAdapter.ViewHold
         {
             m_tvClientName.setText(ticket.getClientName());
             m_tvAddress.setText(ticket.getAddress());
+
+            // calculate schedule and today dates
+            Date scheduleDate, todayDate;
+            {
+                // schedule
+                Calendar c = Calendar.getInstance();
+                c.setTimeInMillis(ticket.getScheduleTime());
+                removeTime(c);
+                scheduleDate = c.getTime();
+
+                // today
+                c.setTimeInMillis(System.currentTimeMillis());
+                removeTime(c);
+                todayDate = c.getTime();
+            }
+
+            // set schedule date to text
+            m_tvScheduleDate.setText(WorkTicketActivity.DATE_FORMAT.format(scheduleDate));
+
+            // set color state. green for normal, red for due
+            int colorId = R.color.ticket_normal;
+            if (scheduleDate.before(todayDate))
+                colorId = R.color.ticket_due;
+
+            m_tvScheduleDate.setBackgroundColor(ContextCompat.getColor(m_tvScheduleDate.getContext(), colorId));
+        }
+
+        private void removeTime(Calendar c)
+        {
+            c.set(Calendar.HOUR_OF_DAY, 0);
+            c.set(Calendar.MINUTE, 0);
+            c.set(Calendar.SECOND, 0);
+            c.set(Calendar.MILLISECOND, 0);
         }
 
         protected void initEvents(final TicketsAdapter adapter)

@@ -11,28 +11,41 @@
     android:clickable="true">
 
     <TextView
+        android:id="@+id/tv_ticket_schedule_date"
+        android:layout_width="60dp"
+        android:layout_height="42dp"
+        android:background="@color/ticket_normal"
+        android:layout_marginRight="8dp"
+        android:text="22/05/2021"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="10dp"/>
+
+    <TextView
         android:id="@+id/tv_ticket_client_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/tv_ticket_schedule_date"
+        android:layout_toRightOf="@+id/tv_ticket_schedule_date"
         android:layout_toLeftOf="@+id/btn_ticket_options"
         android:layout_toStartOf="@+id/btn_ticket_options"
-        android:layout_alignParentLeft="true"
-        android:text="Client name"
-        android:singleLine="true"
         android:ellipsize="end"
-        android:textSize="16sp"/>
+        android:singleLine="true"
+        android:text="Client name"
+        android:textSize="16sp" />
 
     <TextView
-        android:layout_alignParentLeft="true"
         android:id="@+id/tv_ticket_address"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/tv_ticket_schedule_date"
+        android:layout_toRightOf="@+id/tv_ticket_schedule_date"
         android:layout_toLeftOf="@+id/btn_ticket_options"
         android:layout_toStartOf="@+id/btn_ticket_options"
         android:text="Address"
         android:singleLine="true"
         android:ellipsize="end"
-        android:layout_below="@id/tv_ticket_client_name"/>
+        android:layout_below="@id/tv_ticket_client_name" />
 
     <ImageView
         android:id="@+id/btn_ticket_options"
