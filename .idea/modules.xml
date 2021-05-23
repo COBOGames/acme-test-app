@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/AcmeCompany.iml" filepath="$PROJECT_DIR$/.idea/modules/AcmeCompany.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/AcmeCompany.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/AcmeCompany.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/play-services-base-17.0.0/AcmeCompany.play-services-base-17.0.0.iml" filepath="$PROJECT_DIR$/.idea/modules/play-services-base-17.0.0/AcmeCompany.play-services-base-17.0.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/play-services-basement-17.0.0/AcmeCompany.play-services-basement-17.0.0.iml" filepath="$PROJECT_DIR$/.idea/modules/play-services-basement-17.0.0/AcmeCompany.play-services-basement-17.0.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/play-services-maps-17.0.0/AcmeCompany.play-services-maps-17.0.0.iml" filepath="$PROJECT_DIR$/.idea/modules/play-services-maps-17.0.0/AcmeCompany.play-services-maps-17.0.0.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/sugar-1.5/AcmeCompany.sugar-1.5.iml" filepath="$PROJECT_DIR$/.idea/modules/sugar-1.5/AcmeCompany.sugar-1.5.iml" />
     </modules>
   </component>
