@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.isucorp.acmecompanytest.Info;
@@ -35,6 +34,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         initCachingVariables();
         findViewById(R.id.btn_login_start).setOnClickListener(this);
+
+        setTitle(getString(R.string.activity_title_login));
     }
 
     @Override
