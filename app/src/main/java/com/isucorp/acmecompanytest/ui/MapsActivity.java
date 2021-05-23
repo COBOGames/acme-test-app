@@ -10,6 +10,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +25,7 @@ import com.isucorp.acmecompanytest.Info;
 import com.isucorp.acmecompanytest.R;
 import com.isucorp.acmecompanytest.helpers.ToastHelper;
 
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,6 +51,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     // region CACHING VARIABLES
 
     private MapView m_mapView;
+    private WebView m_webView;
     private EditText m_edtAddress;
 
     // endregion
@@ -73,13 +77,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        // init webview
+        m_webView = findViewById(R.id.web_view);
+        m_webView.setWebViewClient(new WebViewClient());
+        m_webView.getSettings().setJavaScriptEnabled(true);
+
         initCachingVariables();
         initExtras();
 
+        // go now to the address
+        goToAddressInWebViewMap();
+
         // init map
-        m_mapView = findViewById(R.id.map_view);
+        /*m_mapView = findViewById(R.id.map_view);
         m_mapView.onCreate(savedInstanceState);
-        m_mapView.getMapAsync(this);
+        m_mapView.getMapAsync(this);*/
 
         // show go back btn in the toolbar and set the close icon
         final ActionBar actionBar = getSupportActionBar();
@@ -120,7 +132,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onResume()
     {
-        m_mapView.onResume();
+        //m_mapView.onResume();
         super.onResume();
     }
 
@@ -128,21 +140,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onPause()
     {
         super.onPause();
-        m_mapView.onPause();
+        //m_mapView.onPause();
     }
 
     @Override
     public void onDestroy()
     {
         super.onDestroy();
-        m_mapView.onDestroy();
+        //m_mapView.onDestroy();
     }
 
     @Override
     public void onLowMemory()
     {
         super.onLowMemory();
-        m_mapView.onLowMemory();
+        //m_mapView.onLowMemory();
     }
 
     // endregion
@@ -218,6 +230,25 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             adb.setPositiveButton("OK", null);
             adb.show();
         }
+    }
+
+    private void goToAddressInWebViewMap()
+    {
+        String url = "https://www.google.com/maps/"; // default for empty
+
+        String address = m_edtAddress.getText().toString();
+        if (!TextUtils.isEmpty(address))
+        {
+            try
+            {
+                url += "search/" + URLEncoder.encode(address, "utf8");
+            }
+            catch (Exception ignored)
+            {
+            }
+        }
+
+        m_webView.loadUrl(url);
     }
 
     // endregion

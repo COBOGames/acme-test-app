@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_margin="8dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/edt_map_address"
@@ -28,9 +29,15 @@
 
     </LinearLayout>
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/map_view"
+<!--    <com.google.android.gms.maps.MapView-->
+<!--        android:id="@+id/map_view"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:visibility="gone"/>-->
+
+    <WebView
+        android:id="@+id/web_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
