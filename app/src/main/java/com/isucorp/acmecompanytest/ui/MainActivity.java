@@ -1,5 +1,6 @@
 package com.isucorp.acmecompanytest.ui;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -18,6 +19,7 @@ import com.isucorp.acmecompanytest.R;
 import com.isucorp.acmecompanytest.entities.AbstractSugarEntity;
 import com.isucorp.acmecompanytest.entities.Ticket;
 import com.isucorp.acmecompanytest.helpers.DialogHelper;
+import com.isucorp.acmecompanytest.helpers.PermissionHelper;
 import com.isucorp.acmecompanytest.helpers.ToastHelper;
 import com.isucorp.acmecompanytest.ui.adapters.OnTicketEvents;
 import com.isucorp.acmecompanytest.ui.adapters.TicketsAdapter;
@@ -29,16 +31,18 @@ import java.util.TimeZone;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 @Info("Created by Ivan Faez Cobo on 20/5/2021")
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback
 {
     // region
 
     private static final int RC_WORK_TICKET = 910;
+    private static final int RC_CALENDAR_PERMISSION = 245;
 
     // endregion
 
@@ -115,18 +119,13 @@ public class MainActivity extends AppCompatActivity
                 }
                 else
                 {
-                    // show a confirm dialog to sync
-                    DialogHelper.showConfirm(
-                            MainActivity.this,
-                            DialogHelper.NO_TEXT,
-                            getString(R.string.confirm_sync_calendar),
-                            (dialog, which) -> {
-                                if (which == DialogInterface.BUTTON_POSITIVE)
-                                    syncCalendar();
-                            },
-                            "Sync",
-                            DialogHelper.DEFAULT_TEXT
-                    );
+                    // check if we have Calendar permissions
+                    if (PermissionHelper.checkForPermission(
+                            this,
+                            new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR},
+                            RC_CALENDAR_PERMISSION)
+                    )
+                        showSyncDialog();
                 }
 
                 return true;
@@ -174,6 +173,22 @@ public class MainActivity extends AppCompatActivity
     // endregion
 
     // region PRIVATE METHODS
+
+    private void showSyncDialog()
+    {
+        // show a confirm dialog to sync
+        DialogHelper.showConfirm(
+                MainActivity.this,
+                DialogHelper.NO_TEXT,
+                getString(R.string.confirm_sync_calendar),
+                (dialog, which) -> {
+                    if (which == DialogInterface.BUTTON_POSITIVE)
+                        syncCalendar();
+                },
+                "Sync",
+                DialogHelper.DEFAULT_TEXT
+        );
+    }
 
     private void syncCalendar()
     {
