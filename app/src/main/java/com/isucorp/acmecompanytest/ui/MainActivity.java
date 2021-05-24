@@ -1,9 +1,14 @@
 package com.isucorp.acmecompanytest.ui;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +25,7 @@ import com.orm.SugarRecord;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.TimeZone;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -101,6 +107,30 @@ public class MainActivity extends AppCompatActivity
                 MapsActivity.start(this, null); // we pass an empty address
                 return true;
             }
+            case R.id.action_sync_calendar:
+            {
+                if (m_adapter.getItemCount() == 0)
+                {
+                    ToastHelper.show(getString(R.string.main_tickets_empty));
+                }
+                else
+                {
+                    // show a confirm dialog to sync
+                    DialogHelper.showConfirm(
+                            MainActivity.this,
+                            DialogHelper.NO_TEXT,
+                            getString(R.string.confirm_sync_calendar),
+                            (dialog, which) -> {
+                                if (which == DialogInterface.BUTTON_POSITIVE)
+                                    syncCalendar();
+                            },
+                            "Sync",
+                            DialogHelper.DEFAULT_TEXT
+                    );
+                }
+
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -144,6 +174,67 @@ public class MainActivity extends AppCompatActivity
     // endregion
 
     // region PRIVATE METHODS
+
+    private void syncCalendar()
+    {
+        try
+        {
+            for (int i = 0; i < m_adapter.getItemCount(); i++)
+                insertOrEditTicketInCalendar(m_adapter.getTicket(i));
+
+            ToastHelper.show("Calendar synced!");
+        }
+        catch (Exception e)
+        {
+            Log.e("Error", "Sync calendar", e);
+            ToastHelper.show("Error syncing with the calendar: " + e.getMessage());
+        }
+    }
+
+    private void insertOrEditTicketInCalendar(Ticket ticket)
+    {
+        int ticketId = ticket.getUuid().hashCode();
+        ContentResolver contentResolver = getContentResolver();
+
+        // check if edit or insert
+        boolean edit = false;
+        final Cursor cursor = contentResolver.query(
+                CalendarContract.Events.CONTENT_URI,
+                new String[]{CalendarContract.Events._ID},
+                null,
+                null,
+                null
+        );
+        {
+            while (cursor.moveToNext())
+            {
+                final long id = cursor.getLong(0);
+                if (id == ticketId)
+                {
+                    edit = true;
+                    break;
+                }
+            }
+        }
+        cursor.close();
+
+        ContentValues values = new ContentValues();
+        values.put(CalendarContract.Events._ID, ticketId);
+        values.put(CalendarContract.Events.DTSTART, ticket.getScheduleTime());
+        values.put(CalendarContract.Events.TITLE, ticket.getClientName());
+        values.put(CalendarContract.Events.DESCRIPTION, "Address: " + ticket.getAddress());
+        values.put(CalendarContract.Events.EVENT_TIMEZONE, TimeZone.getDefault().getID());
+        values.put(CalendarContract.Events.CALENDAR_ID, 1); // default calendar
+        values.put(CalendarContract.Events.HAS_ALARM, 1); // enable alarm
+        values.put(CalendarContract.Events.DURATION, "+P1H"); // set period for 1 hour
+        values.put(CalendarContract.Events.ALL_DAY, 1);
+
+        // edit or insert event to calendar
+        if (edit)
+            contentResolver.update(CalendarContract.Events.CONTENT_URI, values, "_id=" + ticketId, null);
+        else
+            contentResolver.insert(CalendarContract.Events.CONTENT_URI, values);
+    }
 
     /**
      * If we have tickets the m_rv is shown and the

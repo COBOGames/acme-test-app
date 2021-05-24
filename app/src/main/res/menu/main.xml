@@ -16,4 +16,10 @@
         android:id="@+id/action_get_directions"
         android:title="@string/action_get_directions"/>
 
+    <item
+        android:id="@+id/action_sync_calendar"
+        android:title="@string/action_sync_calendar"
+        android:icon="@drawable/ic_sync"
+        app:showAsAction="ifRoom"/>
+
 </menu>

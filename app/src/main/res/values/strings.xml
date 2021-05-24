@@ -14,6 +14,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_edit">Edit</string>
     <string name="action_save">Save</string>
+    <string name="action_sync_calendar">Sync calendar</string>
 
     <!-- LOGIN ACTIVITY -->
     <string name="login_hint_username">Username</string>
@@ -44,5 +45,6 @@
     <string name="confirm_dialog_default_title">Confirmation</string>
     <string name="confirm_delete_this_ticket">Are you sure to delete this ticket?</string>
     <string name="enter_address">Enter address</string>
+    <string name="confirm_sync_calendar">Are you sure to sync the calendar?</string>
 
 </resources>
